@@ -1,5 +1,7 @@
 <script lang="ts">
 	export let user: User;
+
+	let board = [];
 </script>
 
 <div>

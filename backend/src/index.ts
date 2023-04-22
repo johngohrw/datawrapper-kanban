@@ -65,6 +65,31 @@ app.get('/columns', async (req, res) => {
     res.json(columns)
 })
 
+// get all columns for a particular user
+app.get('/columns/:userId', async (req, res) => {
+    const { userId } = req.params
+    const columns = await prisma.column.findMany({
+        where: { userId: parseInt(userId) },
+    })
+    res.json(columns)
+})
+
+// get all tasks and columns for a particular user
+app.get('/board/:userId', async (req, res) => {
+    const { userId } = req.params
+    const columns = await prisma.column.findMany({
+        where: { userId: parseInt(userId) },
+    })
+    const tasks = await prisma.task.findMany({
+        where: {
+            columnId: {
+                in: columns.map(column => column.id)
+            }
+        },
+    })
+    res.json({ tasks, columns })
+})
+
 // create new column for a user
 app.post(`/column`, async (req, res) => {
     const { title, userId } = req.body
