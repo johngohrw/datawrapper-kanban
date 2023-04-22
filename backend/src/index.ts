@@ -13,7 +13,6 @@ app.get('/test', async (req, res) => {
     res.json(result)
 })
 
-
 const server = app.listen(APP_PORT_NUMBER, () =>
     console.log(`Server up at: http://localhost:${APP_PORT_NUMBER}`),
 )
