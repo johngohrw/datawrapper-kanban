@@ -1,5 +1,13 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
+	import { user } from '../store';
+
+	let currentUser: any;
+	const unsubscribe = user.subscribe((value) => {
+		currentUser = value;
+	});
+
+	console.log('currentUser from header', currentUser);
 </script>
 
 <header>
@@ -8,9 +16,11 @@
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
 				<a href="/">Home</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/logout' ? 'page' : undefined}>
-				<a href="/logout">Logout</a>
-			</li>
+			{#if currentUser}
+				<li aria-current={$page.url.pathname === '/logout' ? 'page' : undefined}>
+					<a href="/logout">Logout</a>
+				</li>
+			{/if}
 		</ul>
 	</nav>
 </header>

@@ -8,3 +8,12 @@ declare namespace App {
 	// interface Platform {}
 }
 
+type User = {
+	id: number;
+	email: string;
+	name: string;
+};
+
+type Error = {
+	error: string
+}

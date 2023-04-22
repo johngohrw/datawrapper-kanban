@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import express from 'express'
+import cors from 'cors'
 import { getGeneralizedPrismaErrorMessage } from './utils'
 
 const prisma = new PrismaClient({
@@ -10,6 +11,7 @@ const app = express()
 const APP_PORT_NUMBER = 3000
 
 app.use(express.json())
+app.use(cors())
 
 // sign up
 app.post(`/signup`, async (req, res) => {
@@ -37,7 +39,7 @@ app.post(`/signup`, async (req, res) => {
 })
 
 // log in
-app.get(`/login`, async (req, res) => {
+app.post(`/login`, async (req, res) => {
     const { email } = req.body
     let user = await prisma.user.findUnique({
         where: { email },

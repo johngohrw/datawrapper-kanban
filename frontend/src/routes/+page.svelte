@@ -1,13 +1,30 @@
-<div class="container h-full mx-auto flex justify-center items-center">
-	<div class="space-y-5">
-		<h1>Welcome to Datawrapper Kanban!</h1>
+<script lang="ts">
+	import { API_ENDPOINT } from '../api';
+	import Board from '../components/Board.svelte';
+	import WelcomeContent from '../components/WelcomeContent.svelte';
+	import { user } from '../store';
+	import { onMount } from 'svelte';
 
-		<p>You are not logged in.</p>
+	let currentUser: any;
+	const unsubscribe = user.subscribe((value) => {
+		currentUser = value;
+	});
 
-		<h3>I'm a new user!</h3>
-		<p>You may <a href="/register">create a new account here</a>.</p>
+	onMount(async () => {
+		const res = await fetch(API_ENDPOINT + `users`);
+		const users = await res.json();
+		console.log('users', users);
+	});
+</script>
 
-		<h3>Have an existing account?</h3>
-		<p>You may <a href="/login">sign in here</a>.</p>
-	</div>
-</div>
+<p>Current User: {JSON.stringify(currentUser)}</p>
+
+{#if currentUser?.id}
+	User is {JSON.stringify(currentUser)}
+	<Board user={currentUser} />
+{:else}
+	<WelcomeContent />
+{/if}
+
+<style>
+</style>
