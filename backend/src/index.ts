@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import express from 'express'
+import { getGeneralizedPrismaErrorMessage } from './utils'
 
 const prisma = new PrismaClient({
     errorFormat: "minimal"
@@ -62,10 +63,9 @@ app.post(`/task`, async (req, res) => {
         })
         res.json(result)
     } catch (error) {
-        res.json({ error })
+        res.json({ error: getGeneralizedPrismaErrorMessage(error) })
     }
 })
-
 
 // delete a task
 app.delete(`/task/:id`, async (req, res) => {
@@ -79,6 +79,22 @@ app.delete(`/task/:id`, async (req, res) => {
         res.json(task)
     } catch (error) {
         res.json({ error: `task with ID ${id} does not exist in the database.` })
+    }
+})
+
+
+// delete a column
+app.delete(`/column/:id`, async (req, res) => {
+    const { id } = req.params
+    try {
+        const column = await prisma.column.delete({
+            where: {
+                id: Number(id),
+            },
+        })
+        res.json(column)
+    } catch (error) {
+        res.json({ error: `column with ID ${id} does not exist in the database.` })
     }
 })
 
