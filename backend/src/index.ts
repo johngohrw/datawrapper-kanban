@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { Column, Prisma, PrismaClient } from '@prisma/client'
 import express from 'express'
 import cors from 'cors'
 import { getGeneralizedPrismaErrorMessage } from './utils'
@@ -87,7 +87,18 @@ app.get('/board/:userId', async (req, res) => {
             }
         },
     })
-    res.json({ tasks, columns })
+    const board = columns.reduce((acc, column) => {
+        let { id } = column
+        acc.set(id, { ...column, tasks: [] })
+        return acc
+    }, new Map())
+
+    tasks.forEach(task => {
+        const column = board.get(task.columnId)
+        column.tasks.push(task)
+        board.set(task.columnId, column)
+    })
+    res.json({ board: Object.fromEntries(board) })
 })
 
 // create new column for a user
