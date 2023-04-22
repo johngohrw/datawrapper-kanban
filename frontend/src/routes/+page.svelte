@@ -9,6 +9,11 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Datawrapper Kanban</title>
+	<meta name="description" content="Datawrapper Kanban Board App" />
+</svelte:head>
+
 {#if currentUser?.id}
 	<Board user={currentUser} />
 {:else}

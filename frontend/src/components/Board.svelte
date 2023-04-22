@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { dndzone } from 'svelte-dnd-action';
-	import { API_ENDPOINT } from '../api';
+	import { API_ENDPOINT, editColumnAPI, editTaskAPI } from '../api';
 
 	export let user: User;
 	let isDragging = false;
@@ -41,17 +41,17 @@
 		board = [...board];
 	}
 	function handleFinalize(columnId: number, event: CustomEvent) {
-		console.log(columnId, event);
 		isDragging = false;
 		const columnIndex = board.findIndex((col) => col.id === columnId);
 		board[columnIndex].tasks = event.detail.items;
 		board = [...board];
 
 		if (event.detail.info.trigger === 'droppedIntoZone') {
-			console.log(columnId);
-			// call task edit api here
+			const taskId = event.detail.info.id;
+			editTaskAPI(taskId, { columnId });
 		}
 	}
+
 	function handleClick(e: MouseEvent) {
 		console.log(e);
 		alert('dragabble elements are still clickable :)');
@@ -65,8 +65,7 @@
 	function handleEditFinish(e: KeyboardEvent | FocusEvent, column: BoardColumn) {
 		column.title = (e.target as HTMLInputElement).value;
 		editedColumn = -1;
-
-		// call column edit api here
+		editColumnAPI(column.id, { title: column.title });
 	}
 </script>
 

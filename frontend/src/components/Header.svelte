@@ -1,14 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { user } from '../store';
 
 	let currentUser: any;
 	const unsubscribe = user.subscribe((value) => {
 		currentUser = value;
 	});
-
-	$: console.log('currentUser from header', currentUser);
 
 	function handleLogout() {
 		user.set(null);
