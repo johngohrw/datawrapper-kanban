@@ -31,23 +31,28 @@
 			return;
 		}
 		isLoading = true;
-		const res = await fetch(API_ENDPOINT + `signup`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				name,
-				email
-			})
-		});
-		const result = await res.json();
+		try {
+			const res = await fetch(API_ENDPOINT + `signup`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					name,
+					email
+				})
+			});
+			const result = await res.json();
 
-		if (Object.hasOwn(result, 'error')) {
-			errorMessage = result?.error;
-		} else if (result?.id) {
-			user.set(result);
-			goto(`/`);
+			if (Object.hasOwn(result, 'error')) {
+				errorMessage = result?.error;
+			} else if (result?.id) {
+				user.set(result);
+				goto(`/`);
+			}
+		} catch (e: any) {
+			errorMessage = e.message;
+			console.error(e);
 		}
 		isLoading = false;
 	}
@@ -60,6 +65,7 @@
 
 <div class="container h-full w-full max-w-7xl mx-auto flex items-center justify-center">
 	<div class="space-y-5 w-full max-w-md">
+		<a href="/">Back</a>
 		<h2>New User</h2>
 		<form on:submit={(e) => e.preventDefault()}>
 			<div class="flex flex-col mb-2">

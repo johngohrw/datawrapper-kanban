@@ -17,10 +17,7 @@
 	});
 </script>
 
-<p>Current User: {JSON.stringify(currentUser)}</p>
-
 {#if currentUser?.id}
-	User is {JSON.stringify(currentUser)}
 	<Board user={currentUser} />
 {:else}
 	<WelcomeContent />

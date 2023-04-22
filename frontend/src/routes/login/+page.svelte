@@ -9,22 +9,28 @@
 
 	async function handleLogin() {
 		isLoading = true;
-		const res = await fetch(API_ENDPOINT + `login`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				email
-			})
-		});
-		const result = await res.json();
-		if (Object.hasOwn(result, 'error')) {
-			errorMessage = result?.error;
-		} else if (result?.id) {
-			user.set(result);
-			goto(`/`);
+		try {
+			const res = await fetch(API_ENDPOINT + `login`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					email
+				})
+			});
+			const result = await res.json();
+			if (Object.hasOwn(result, 'error')) {
+				errorMessage = result?.error;
+			} else if (result?.id) {
+				user.set(result);
+				goto(`/`);
+			}
+		} catch (e: any) {
+			errorMessage = e.message;
+			console.error(e);
 		}
+
 		isLoading = false;
 	}
 </script>
@@ -36,6 +42,7 @@
 
 <div class="container h-full max-w-7xl mx-auto flex items-center justify-center">
 	<div class="space-y-5 w-full max-w-md">
+		<a href="/">Back</a>
 		<h2>Log in</h2>
 		<form on:submit={(e) => e.preventDefault()}>
 			<div class="flex flex-col">
@@ -59,7 +66,7 @@
 			</div>
 		</form>
 		<div class="flex justify-end">
-			<a href="register" class="text-sm">Create a new account instead</a>
+			<a href="register" class="text-sm">Not a user? Create a new account instead</a>
 		</div>
 	</div>
 </div>
