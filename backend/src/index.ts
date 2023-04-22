@@ -134,6 +134,40 @@ app.post(`/task`, async (req, res) => {
     }
 })
 
+// update a column
+app.put(`/column/:columnId`, async (req, res) => {
+    const { columnId } = req.params
+    const { title } = req.body
+    try {
+        const column = await prisma.column.update({
+            where: { id: parseInt(columnId) },
+            data: {
+                title
+            }
+        })
+        res.json(column)
+    } catch (error) {
+        res.json({ error: `column with ID ${columnId} does not exist in the database.` })
+    }
+})
+
+// update a task
+app.put(`/task/:taskId`, async (req, res) => {
+    const { taskId } = req.params
+    const { columnId } = req.body
+    try {
+        const task = await prisma.task.update({
+            where: { id: parseInt(taskId) },
+            data: {
+                columnId
+            }
+        })
+        res.json(task)
+    } catch (error) {
+        res.json({ error: `task with ID ${taskId} does not exist in the database.` })
+    }
+})
+
 // delete a task
 app.delete(`/task/:id`, async (req, res) => {
     const { id } = req.params

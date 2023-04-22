@@ -34,6 +34,8 @@
 	header {
 		background: rgb(23, 31, 68);
 		padding: 1rem;
+		position: sticky;
+		top: 0;
 	}
 	nav {
 		display: flex;
