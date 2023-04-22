@@ -4,7 +4,7 @@
 <footer class="flex flex-row flex-wrap items-center">
 	<div class="mr-4">
 		Made by <a href="https://github.com/johngohrw">johngohrw</a> for
-		<a href="https://www.datawrapper.de/">DataWrapper</a>. (<a
+		<a href="https://www.datawrapper.de/">Datawrapper</a>. (<a
 			href="https://github.com/johngohrw/datawrapper-kanban"
 		>
 			Github</a

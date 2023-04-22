@@ -21,6 +21,7 @@
 <style lang="scss">
 	.app {
 		min-height: 100vh;
+		height: 100%;
 		display: flex;
 		flex-flow: column nowrap;
 	}
@@ -28,5 +29,6 @@
 	main {
 		padding: 2rem;
 		flex-grow: 1;
+		height: 100%;
 	}
 </style>

@@ -1,13 +1,13 @@
-<!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
-
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-5">
-		<h1>Let's get cracking bones!</h1>
-		<p>Start by exploring:</p>
-		<ul>
-			<li><code>/src/routes/+layout.svelte</code> - barebones layout, the CSS import order is critical!</li>
-			<li><code>/src/app.postcss</code> - minimal css to make the page full screen, may not be relevant for your project</li>
-			<li><code>/src/routes/+page.svelte</code> - this page, you can replace the contents</li>
-		</ul>
+		<h1>Welcome to Datawrapper Kanban!</h1>
+
+		<p>You are not logged in.</p>
+
+		<h3>I'm a new user!</h3>
+		<p>You may <a href="/register">create a new account here</a>.</p>
+
+		<h3>Have an existing account?</h3>
+		<p>You may <a href="/login">sign in here</a>.</p>
 	</div>
 </div>
