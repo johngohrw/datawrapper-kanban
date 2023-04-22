@@ -5,6 +5,22 @@ const prisma = new PrismaClient()
 const userData: Prisma.UserCreateInput[] = [
   {
     name: 'John',
+    email: 'john@example.com',
+    columns: {
+      create: [
+        {
+          title: 'Backlog',
+          tasks: {
+            create: [
+              {
+                title: "Do homework",
+                description: "3 pages of maths exercises due tomorrow.."
+              }
+            ]
+          }
+        },
+      ],
+    },
   },
 ]
 
