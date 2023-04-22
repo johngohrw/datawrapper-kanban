@@ -1,0 +1,25 @@
+{
+  "name": "datawrapper-kanban",
+  "version": "0.1.0",
+  "description": "A simple fullstack Kanban board app for a Datawrapper test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/johngohrw/datawrapper-kanban.git"
+  },
+  "keywords": [
+    "svelte",
+    "nodejs",
+    "kanban",
+    "fullstack"
+  ],
+  "author": "John Goh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johngohrw/datawrapper-kanban/issues"
+  },
+  "homepage": "https://github.com/johngohrw/datawrapper-kanban#readme"
+}
