@@ -29,7 +29,9 @@ async function main() {
     const _user = await prisma.user.create({
       data: user,
     })
+    console.log(`Created user id ${_user.id} in DB.`)
   }
+  console.log("Done seeding.")
 }
 
 main()
