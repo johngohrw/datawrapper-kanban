@@ -60,11 +60,10 @@
 			description: '',
 			columnId
 		});
-		console.log('newTask', newTask);
-
 		const columnToAdd = board.find((column) => column.id === columnId);
 		if (columnToAdd) {
 			columnToAdd.tasks.push(newTask);
+			taskToEdit = newTask;
 		}
 		board = [...board];
 	}
@@ -80,7 +79,6 @@
 
 	function handleEditTask(task: BoardTask) {
 		taskToEdit = task;
-		console.log(task);
 	}
 
 	function handleUpdateTask(columnId: number, taskId: number, newValues: object) {
