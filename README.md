@@ -1,10 +1,35 @@
 # Datawrapper Kanban 
 Simple Kanban board fullstack app with Svelte and Node.js
 
-## Running it locally
+## Setting up
 
-Work in progress.
+install all dependencies for both frontend and backend.
+```
+npm run install-all
+```
 
-## Deployment
+Seed the SQLite database with Prisma
+```
+npm run seed-db
+```
 
-Work in progress.
+## Development
+
+Run both development instances in parallel
+```
+npm run dev
+```
+
+## Building
+
+Build backend with `tsc`, frontend with `vite`
+```
+npm run build
+```
+
+Run built instances
+```
+npm run start:client  // run vite frontend
+npm run start:server  // run node.js backend
+npm run start         // run both
+```
