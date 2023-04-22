@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { API_ENDPOINT, addColumnAPI, addTaskAPI, editColumnAPI, editTaskAPI } from '../api';
 	import { onMount } from 'svelte';
 	import { dndzone } from 'svelte-dnd-action';
-	import { API_ENDPOINT, addColumnAPI, addTaskAPI, editColumnAPI, editTaskAPI } from '../api';
-	import Card from './Card.svelte';
 	import CardDetails from './CardDetails.svelte';
+	import Card from './Card.svelte';
 
 	export let user: User;
 	let isDragging = false;
@@ -85,7 +85,6 @@
 		const columnForTask = board.find((column) => column.id === columnId);
 		if (columnForTask) {
 			let taskToEdit = columnForTask.tasks.find((task) => task.id === taskId);
-			console.log(taskToEdit, newValues);
 			taskToEdit = { ...taskToEdit, ...(newValues as BoardTask) };
 		}
 		board = [...board];
@@ -167,14 +166,13 @@
 		margin-bottom: 2rem;
 	}
 	.board {
-		/* border: 1px solid black; */
-
 		display: flex;
 		flex-flow: row nowrap;
 		gap: 1rem;
+
+		min-height: 150px;
 	}
 	.column {
-		/* border: 1px solid red; */
 		width: 240px;
 		min-width: 240px;
 	}

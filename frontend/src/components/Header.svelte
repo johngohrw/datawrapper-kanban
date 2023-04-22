@@ -15,7 +15,7 @@
 
 <header>
 	<nav>
-		<a href="/">Home</a>
+		<span class="font-bold">Datawrapper Kanban</span>
 		{#if currentUser}
 			<div>
 				<span class="mr-2">Signed in as {currentUser.name}</span>

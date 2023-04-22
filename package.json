@@ -4,7 +4,8 @@
   "description": "A simple fullstack Kanban board app for a Datawrapper test",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "cd backend && npx prisma migrate dev --name"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/johngohrw/datawrapper-kanban/issues"
   },
-  "homepage": "https://github.com/johngohrw/datawrapper-kanban#readme"
+  "homepage": "https://github.com/johngohrw/datawrapper-kanban#readme",
+  "dependencies": {
+    "concurrently": "^8.0.1"
+  }
 }

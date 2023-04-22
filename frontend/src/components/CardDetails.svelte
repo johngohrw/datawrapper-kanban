@@ -35,18 +35,18 @@
 
 <div class="card-details">
 	<div class="flex flex-row justify-between items-center mb-3">
-		<div class="card-title text-xl font-bold">Edit Task</div>
+		<div class="text-xl font-bold">Edit Task</div>
 		<button class="close-button" on:click={onClose}>X</button>
 	</div>
 	<div class="text-xs text-gray-500 mb-0.5">Title</div>
 	<input
-		class="card-field-title input-text mb-2"
+		class="input-text mb-2"
 		value={formState?.title}
 		on:input={(e) => handleFormChange(e, 'title')}
 	/>
 	<div class="text-xs text-gray-500 mb-0.5">Description</div>
 	<textarea
-		class="card-field-description input-text mb-2"
+		class="input-text mb-2"
 		value={formState?.description}
 		on:input={(e) => handleFormChange(e, 'description')}
 	/>
@@ -78,11 +78,5 @@
 		padding: 1rem;
 
 		box-shadow: 3px 3px 13px 5px rgba(0, 0, 0, 0.1);
-	}
-	.card-title {
-	}
-	.card-field-title {
-	}
-	.card-field-description {
 	}
 </style>
