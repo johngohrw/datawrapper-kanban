@@ -18,6 +18,21 @@ type Error = {
 	error: string
 }
 
+type BoardTask = {
+	id: number;
+	title: string;
+	description: string;
+	columnId: number;
+};
+
+type BoardColumn = {
+	id: number;
+	title: string;
+	userId: number;
+	tasks: BoardTask[];
+};
+
+
 declare type Item = import('svelte-dnd-action').Item;
 declare type DndEvent<ItemType = Item> = import('svelte-dnd-action').DndEvent<ItemType>;
 declare namespace svelte.JSX {

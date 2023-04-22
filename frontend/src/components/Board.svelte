@@ -1,24 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { dndzone } from 'svelte-dnd-action';
-	import { API_ENDPOINT, editColumnAPI, editTaskAPI } from '../api';
+	import { API_ENDPOINT, addColumnAPI, addTaskAPI, editColumnAPI, editTaskAPI } from '../api';
+	import Card from './Card.svelte';
 
 	export let user: User;
 	let isDragging = false;
-
-	type BoardTask = {
-		id: number;
-		title: string;
-		description: string;
-		columnId: number;
-	};
-
-	type BoardColumn = {
-		id: number;
-		title: string;
-		userId: number;
-		tasks: BoardTask[];
-	};
 
 	let board: BoardColumn[] = [];
 	let originalBoardState = {};
@@ -52,9 +39,8 @@
 		}
 	}
 
-	function handleClick(e: MouseEvent) {
-		console.log(e);
-		alert('dragabble elements are still clickable :)');
+	function handleTaskEdit(task: BoardTask) {
+		console.log(task);
 	}
 
 	function handleEdit(columnId: number) {
@@ -67,9 +53,33 @@
 		editedColumn = -1;
 		editColumnAPI(column.id, { title: column.title });
 	}
+
+	async function handleAddTask(columnId: number) {
+		const newTask = await addTaskAPI({
+			title: '',
+			description: '',
+			columnId
+		});
+		console.log('newTask', newTask);
+
+		const columnToAdd = board.find((column) => column.id === columnId);
+		if (columnToAdd) {
+			columnToAdd.tasks.push(newTask);
+		}
+		board = [...board];
+	}
+
+	async function handleAddColumn() {
+		const newColumn = await addColumnAPI({
+			title: 'New Column',
+			userId: user.id
+		});
+		board.push({ tasks: [], ...newColumn });
+		board = [...board];
+	}
 </script>
 
-<div>
+<div class="board-container">
 	<div class="top-section">
 		<h3>Welcome, {user.name}</h3>
 	</div>
@@ -102,20 +112,24 @@
 					on:finalize={(e) => handleFinalize(column.id, e)}
 				>
 					{#each column.tasks as task (task.id)}
-						<div class="board-card" on:keypress={() => {}} on:click={handleClick}>
-							<div class="board-card-title">{task.title}</div>
-							<div class="board-card-description">
-								{task.description}
-							</div>
+						<div on:keydown={() => {}} on:click={() => handleTaskEdit(task)}>
+							<Card {task} />
 						</div>
 					{/each}
 				</div>
+				<button class="card-adder" on:click={() => handleAddTask(column.id)}>New task</button>
 			</div>
 		{/each}
+		<div class="column-adder-container">
+			<button class="column-adder" on:click={() => handleAddColumn()}>New column</button>
+		</div>
 	</div>
 </div>
 
 <style>
+	.board-container {
+		position: relative;
+	}
 	.top-section {
 		margin-bottom: 2rem;
 	}
@@ -124,7 +138,7 @@
 
 		display: flex;
 		flex-flow: row nowrap;
-		gap: 0.5rem;
+		gap: 1rem;
 	}
 	.column {
 		/* border: 1px solid red; */
@@ -145,10 +159,11 @@
 		overflow: hidden;
 	}
 	.card-container {
-		height: 100%;
+		min-height: 100px;
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 0.5rem;
+		margin-bottom: 1rem;
 
 		border-radius: 6px;
 		outline-width: 0 !important;
@@ -156,25 +171,36 @@
 		background: transparent;
 		transition-duration: 150ms;
 	}
+	.card-container:empty {
+		background: rgba(255, 255, 255, 0.1);
+	}
 	.card-container.dragging {
 		background: rgba(255, 255, 255, 0.1);
 	}
-	.board-card {
-		min-height: 100px;
+	.card-adder {
 		width: 100%;
 		padding: 1rem;
 		border-radius: 4px;
 
-		background-color: #dfd9d9 !important;
+		background: rgba(148, 148, 148, 0.1);
+		color: rgb(211, 211, 211);
+		font-size: 12px;
 	}
+	.column-adder-container {
+		width: 240px;
+		min-width: 240px;
+		padding-top: 46px;
+	}
+	.column-adder {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		width: 100%;
+		border-radius: 4px;
 
-	.board-card-title {
-		color: rgb(26, 26, 26);
-		font-size: 14px;
-		margin-bottom: 0.5rem;
-	}
-	.board-card-description {
-		color: rgb(75, 75, 75);
-		font-size: 11px;
+		background: rgba(148, 148, 148, 0.1);
+		color: rgb(211, 211, 211);
+		font-size: 12px;
 	}
 </style>
