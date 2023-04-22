@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { user } from '../store';
 
@@ -7,21 +8,25 @@
 		currentUser = value;
 	});
 
-	console.log('currentUser from header', currentUser);
+	$: console.log('currentUser from header', currentUser);
+
+	function handleLogout() {
+		user.set(null);
+		goto('/');
+	}
 </script>
 
 <header>
 	<nav>
-		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Home</a>
-			</li>
-			{#if currentUser}
-				<li aria-current={$page.url.pathname === '/logout' ? 'page' : undefined}>
-					<a href="/logout">Logout</a>
-				</li>
-			{/if}
-		</ul>
+		<a href="/">Home</a>
+		{#if currentUser}
+			<div>
+				<span class="mr-2">Signed in as {currentUser.name}</span>
+				<button on:click={handleLogout} class="btn btn-blue">Logout</button>
+			</div>
+		{:else}
+			<a href="/login">Sign in</a>
+		{/if}
 	</nav>
 </header>
 
@@ -30,14 +35,12 @@
 		background: rgb(23, 31, 68);
 		padding: 1rem;
 	}
-	ul {
+	nav {
 		display: flex;
-		list-style-type: none;
-
-		li {
-			margin-right: 2rem;
-		}
+		flex-flow: row nowrap;
+		justify-content: space-between;
 	}
+
 	a {
 		font-weight: 600;
 	}

@@ -1,0 +1,1 @@
+export const validEmailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/

@@ -7,13 +7,9 @@
 	let errorMessage = '';
 	let isLoading = false;
 
-	function clearError() {
-		errorMessage = '';
-	}
-
 	async function handleLogin() {
 		isLoading = true;
-		const res = await fetch(API_ENDPOINT + `login?`, {
+		const res = await fetch(API_ENDPOINT + `login`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -39,28 +35,34 @@
 </svelte:head>
 
 <div class="container h-full max-w-7xl mx-auto flex items-center justify-center">
-	<div class="space-y-5">
+	<div class="space-y-5 w-full max-w-md">
 		<h2>Log in</h2>
-		<div class="form">
-			<div>
-				email:<input bind:value={email} on:keypress={clearError} placeholder="john@example.com" />
+		<form on:submit={(e) => e.preventDefault()}>
+			<div class="flex flex-col">
+				<div class="mb-1">Please enter your email address</div>
+				<input
+					class="input-text"
+					bind:value={email}
+					on:keypress={() => {
+						errorMessage = '';
+					}}
+					placeholder="john@example.com"
+				/>
 			</div>
 			{#if errorMessage.length > 0}
-				<div class="error-message">{errorMessage}</div>{/if}
-			<div>
-				<button on:click={handleLogin} disabled={isLoading}>Log in</button>
+				<div class="error-message text-red-600 text-sm">{errorMessage}</div>
+			{/if}
+			<div class="flex justify-end mt-2">
+				<button type="submit" on:click={handleLogin} disabled={isLoading} class="btn btn-blue"
+					>Log in</button
+				>
 			</div>
+		</form>
+		<div class="flex justify-end">
+			<a href="register" class="text-sm">Create a new account instead</a>
 		</div>
-
-		<a href="register">Create a new account instead</a>
 	</div>
 </div>
 
 <style lang="scss">
-	input {
-		color: black;
-	}
-	.error-message {
-		color: red;
-	}
 </style>
