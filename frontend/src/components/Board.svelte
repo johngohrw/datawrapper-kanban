@@ -3,6 +3,7 @@
 	import { dndzone } from 'svelte-dnd-action';
 	import { API_ENDPOINT, addColumnAPI, addTaskAPI, editColumnAPI, editTaskAPI } from '../api';
 	import Card from './Card.svelte';
+	import CardDetails from './CardDetails.svelte';
 
 	export let user: User;
 	let isDragging = false;
@@ -12,6 +13,8 @@
 
 	let editedColumn: number = -1;
 	let newColumnName: string = '';
+
+	let taskToEdit: BoardTask | null = null;
 
 	// initial board state fetch
 	onMount(async () => {
@@ -27,6 +30,7 @@
 		board[columnIndex].tasks = event.detail.items;
 		board = [...board];
 	}
+
 	function handleFinalize(columnId: number, event: CustomEvent) {
 		isDragging = false;
 		const columnIndex = board.findIndex((col) => col.id === columnId);
@@ -39,16 +43,12 @@
 		}
 	}
 
-	function handleTaskEdit(task: BoardTask) {
-		console.log(task);
-	}
-
-	function handleEdit(columnId: number) {
+	function handleColumnEdit(columnId: number) {
 		newColumnName = board.find((column) => column.id === columnId)?.title || '';
 		editedColumn = columnId;
 	}
 
-	function handleEditFinish(e: KeyboardEvent | FocusEvent, column: BoardColumn) {
+	function handleColumnEditFinish(e: KeyboardEvent | FocusEvent, column: BoardColumn) {
 		column.title = (e.target as HTMLInputElement).value;
 		editedColumn = -1;
 		editColumnAPI(column.id, { title: column.title });
@@ -77,9 +77,35 @@
 		board.push({ tasks: [], ...newColumn });
 		board = [...board];
 	}
+
+	function handleEditTask(task: BoardTask) {
+		taskToEdit = task;
+		console.log(task);
+	}
+
+	function handleUpdateTask(columnId: number, taskId: number, newValues: object) {
+		const columnForTask = board.find((column) => column.id === columnId);
+		if (columnForTask) {
+			let taskToEdit = columnForTask.tasks.find((task) => task.id === taskId);
+			console.log(taskToEdit, newValues);
+			taskToEdit = { ...taskToEdit, ...(newValues as BoardTask) };
+		}
+		board = [...board];
+	}
 </script>
 
 <div class="board-container">
+	{#if taskToEdit}
+		<div class="edit-modal">
+			<CardDetails
+				task={taskToEdit}
+				onClose={() => {
+					taskToEdit = null;
+				}}
+				updateTask={handleUpdateTask}
+			/>
+		</div>
+	{/if}
 	<div class="top-section">
 		<h3>Welcome, {user.name}</h3>
 	</div>
@@ -91,16 +117,16 @@
 						<input
 							class="input-text"
 							bind:value={newColumnName}
-							on:blur={(e) => handleEditFinish(e, column)}
+							on:blur={(e) => handleColumnEditFinish(e, column)}
 							on:keypress={(e) => {
 								if (e.key === 'Enter') {
 									e.preventDefault();
-									handleEditFinish(e, column);
+									handleColumnEditFinish(e, column);
 								}
 							}}
 						/>
 					{:else}
-						<button title="Edit this column" on:click={() => handleEdit(column.id)}>
+						<button title="Edit this column" on:click={() => handleColumnEdit(column.id)}>
 							{column.title}
 						</button>
 					{/if}
@@ -112,7 +138,7 @@
 					on:finalize={(e) => handleFinalize(column.id, e)}
 				>
 					{#each column.tasks as task (task.id)}
-						<div on:keydown={() => {}} on:click={() => handleTaskEdit(task)}>
+						<div on:keydown={() => {}} on:click={() => handleEditTask(task)}>
 							<Card {task} />
 						</div>
 					{/each}
@@ -129,6 +155,15 @@
 <style>
 	.board-container {
 		position: relative;
+		height: 100%;
+	}
+	.edit-modal {
+		position: absolute;
+		width: clamp(300px, 100%, 500px);
+
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
 	}
 	.top-section {
 		margin-bottom: 2rem;

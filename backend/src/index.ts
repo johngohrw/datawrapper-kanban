@@ -154,13 +154,10 @@ app.put(`/column/:columnId`, async (req, res) => {
 // update a task
 app.put(`/task/:taskId`, async (req, res) => {
     const { taskId } = req.params
-    const { columnId } = req.body
     try {
         const task = await prisma.task.update({
             where: { id: parseInt(taskId) },
-            data: {
-                columnId
-            }
+            data: req.body
         })
         res.json(task)
     } catch (error) {
