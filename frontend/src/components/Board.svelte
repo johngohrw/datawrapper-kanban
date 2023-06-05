@@ -191,6 +191,7 @@
 	}
 	.card-container {
 		min-height: 100px;
+		height: calc(100% - 110px);
 		display: flex;
 		flex-flow: column nowrap;
 		gap: 0.5rem;
@@ -199,14 +200,14 @@
 		border-radius: 6px;
 		outline-width: 0 !important;
 
-		background: transparent;
+		background: rgba(255, 255, 255, 0.1);
 		transition-duration: 150ms;
 	}
 	.card-container:empty {
-		background: rgba(255, 255, 255, 0.1);
+		/* background: rgba(255, 255, 255, 0.1); */
 	}
 	.card-container.dragging {
-		background: rgba(255, 255, 255, 0.1);
+		/* background: rgba(255, 255, 255, 0.1); */
 	}
 	.card-adder {
 		width: 100%;
