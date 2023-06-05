@@ -60,7 +60,7 @@
 
 <svelte:head>
 	<title>Register</title>
-	<meta name="description" content="Register with Datawrapper Kanban" />
+	<meta name="description" content="Register with Simple Kanban" />
 </svelte:head>
 
 <div class="container h-full w-full max-w-7xl mx-auto flex items-center justify-center">

@@ -1,4 +1,4 @@
-# Datawrapper Kanban 
+# Simple Kanban 
 Simple Kanban board fullstack app with Svelte and Node.js
 
 ## Setting up

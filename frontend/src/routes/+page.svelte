@@ -10,8 +10,8 @@
 </script>
 
 <svelte:head>
-	<title>Datawrapper Kanban</title>
-	<meta name="description" content="Datawrapper Kanban Board App" />
+	<title>Simple Kanban</title>
+	<meta name="description" content="Simple Kanban Board App" />
 </svelte:head>
 
 {#if currentUser?.id}

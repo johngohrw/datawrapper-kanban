@@ -1,7 +1,7 @@
 {
-  "name": "datawrapper-kanban-backend",
+  "name": "simple-kanban-backend",
   "version": "0.1.0",
-  "description": "Backend for Datawrapper Kanban",
+  "description": "Backend for Simple Kanban",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node src/index.ts",

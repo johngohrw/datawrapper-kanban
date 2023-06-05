@@ -1,6 +1,6 @@
 <svelte:head>
-	<title>Kanban Board - Datawrapper</title>
-	<meta name="description" content="Datawrapper Kanban board view" />
+	<title>Kanban Board</title>
+	<meta name="description" content="Simple Kanban board view" />
 </svelte:head>
 
 <div class="container h-full mx-auto flex justify-center items-center">

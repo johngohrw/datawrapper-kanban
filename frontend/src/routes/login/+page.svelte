@@ -37,7 +37,7 @@
 
 <svelte:head>
 	<title>Login</title>
-	<meta name="description" content="Login to Datawrapper Kanban" />
+	<meta name="description" content="Login to Simple Kanban" />
 </svelte:head>
 
 <div class="container h-full max-w-7xl mx-auto flex items-center justify-center">

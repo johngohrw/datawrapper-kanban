@@ -2,7 +2,7 @@
 	<div class="space-y-8">
 		<h1>
 			<div class=" text-3xl">Welcome to</div>
-			Datawrapper Kanban
+			Simple Kanban
 		</h1>
 		<p>You are currently not logged in.</p>
 		<div class="flex lg:flex-row flex-col space-y-5 lg:space-y-0 lg:space-x-10">
